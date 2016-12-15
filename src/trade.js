@@ -145,6 +145,7 @@ class Trade extends Exchange.Trade {
       // expecting payment for:
       return [
         'awaiting_transfer_in',
+        'processing',
         'completed',
         'completed_test'
       ].indexOf(trade.state) > -1;
