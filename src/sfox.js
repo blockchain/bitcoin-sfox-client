@@ -81,6 +81,10 @@ class SFOX extends Exchange.Exchange {
       assert(self.delegate.isMobileVerified(), 'mobile must be verified');
     };
 
+    var getToken = () => {
+      return self.delegate.getToken.bind(self.delegate)('sfox');
+    };
+
     var doSignup = function (token) {
       assert(token, 'email + mobile token missing');
       return this._api.POST('account', {
@@ -97,7 +101,7 @@ class SFOX extends Exchange.Exchange {
     };
 
     return Promise.resolve().then(runChecks.bind(this))
-                            .then(this.delegate.getToken.bind(this.delegate))
+                            .then(getToken.bind(this))
                             .then(doSignup.bind(this))
                             .then(saveMetadata.bind(this));
   }

@@ -114,7 +114,8 @@ describe('SFOX', function () {
               token: 'account-token',
               account: {
                 id: '1'
-              }
+              },
+              sfox: true
             });
           }
         } else {
