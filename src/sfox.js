@@ -33,12 +33,13 @@ var Profile = require('./profile');
 var Trade = require('./trade');
 var Quote = require('./quote');
 var PaymentMedium = require('./payment-medium');
+var BankLink = require('./bank-link');
 
 var assert = require('assert');
 
 class SFOX extends Exchange.Exchange {
   constructor (object, delegate) {
-    super(delegate, Trade, Quote, PaymentMedium);
+    super(delegate, Trade, Quote, PaymentMedium, BankLink);
 
     var obj = object || {};
     this._partner_id = null;
@@ -46,6 +47,7 @@ class SFOX extends Exchange.Exchange {
     this._auto_login = obj.auto_login;
     this._accountToken = obj.account_token;
     this._api = new API();
+    this._bankLink = new BankLink(this._api);
     this._api._accountToken = this._accountToken;
 
     this._trades = [];
@@ -65,6 +67,8 @@ class SFOX extends Exchange.Exchange {
   get buyCurrencies () { return ['USD']; }
 
   get sellCurrencies () { return ['USD']; }
+
+  get bankLink () { return this._bankLink; }
 
   // Email must be set and verified
   // Mobile must be set and verified

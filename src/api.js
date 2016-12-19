@@ -28,7 +28,9 @@ class API extends Exchange.API {
     assert(endpoint, 'endpoint required');
     version = version || 'v2';
     subdomain = subdomain || 'api';
-    return `https://${subdomain}${this._production ? '' : '.staging'}.sfox.com/${version}/partner/${this._partnerId}/${endpoint}`;
+    return version === 'v1'
+    ? `https://${subdomain}${this._production ? '' : '.staging'}.sfox.com/${version}/${endpoint}`
+    : `https://${subdomain}${this._production ? '' : '.staging'}.sfox.com/${version}/partner/${this._partnerId}/${endpoint}`;
   }
 
   GET (endpoint, data, version, subdomain) {
