@@ -63,7 +63,7 @@ class Trade extends Exchange.Trade {
     this._createdAt = new Date(obj.created_at);
 
     if (this._outCurrency === 'BTC') {
-      this._txHash = obj.blockchain_tx_hash;
+      this._txHash = obj.blockchain_tx_hash || this._txHash;
       this._receiveAddress = obj.address;
     }
   }
@@ -145,6 +145,7 @@ class Trade extends Exchange.Trade {
       // expecting payment for:
       return [
         'awaiting_transfer_in',
+        'processing',
         'completed',
         'completed_test'
       ].indexOf(trade.state) > -1;
