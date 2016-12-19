@@ -1,6 +1,6 @@
 {
-    "app_name": "Bitcoin Exchange Client",
-    "repo_url": "https://github.com/blockchain/bitcoin-exchange-client",
+    "app_name": "Bitcoin SFOX Client",
+    "repo_url": "https://github.com/blockchain/bitcoin-sfox-client",
     "file": "Changelog.md",
     "sections": [
         {
