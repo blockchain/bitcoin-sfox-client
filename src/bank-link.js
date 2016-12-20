@@ -7,17 +7,23 @@ class BankLink {
 
   get api () { return this._api; }
 
-  get accounts () { return this._accounts; }
-
   getAccounts (token) {
-    return this.api.authPOST('user/bankEnumerate', {
-      public_token: token
-    }, 'v1', 'api', null);
+    const filterAccounts = (bankAccounts) => {
+      return bankAccounts.filter((a) => ['checking', 'savings'].indexOf(a.subtype) > -1)
+    };
+
+    const getAccounts = (token) => {
+      return this.api.authPOST('user/bankEnumerate', {
+        public_token: token
+      }, 'v1', 'api', null);
+    };
+
+    return getAccounts(token).then(filterAccounts);
   }
 
   setAccount (obj) {
-    console.log(obj);
     return this.api.authPOST('user/bankToken', {
+      name: ' ',
       firstname: obj.firstName,
       lastname: obj.lastName,
       public_token: obj.token,
