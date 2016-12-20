@@ -24,44 +24,44 @@ class API extends Exchange.API {
 
   get hasAccount () { return Boolean(this.accountToken); }
 
-  _url (subdomain, version, endpoint) {
+  _url (subdomain, version, endpoint, partner) {
     assert(endpoint, 'endpoint required');
     version = version || 'v2';
     subdomain = subdomain || 'api';
-    return version === 'v1'
-    ? `https://${subdomain}${this._production ? '' : '.staging'}.sfox.com/${version}/${endpoint}`
-    : `https://${subdomain}${this._production ? '' : '.staging'}.sfox.com/${version}/partner/${this._partnerId}/${endpoint}`;
+    partner = partner === null ? null : true;
+
+    return `https://${subdomain}${this._production ? '' : '.staging'}.sfox.com/${version}${partner ? '/partner/'+this._partnerId : ''}/${endpoint}`;
   }
 
-  GET (endpoint, data, version, subdomain) {
-    return this._request('GET', endpoint, version, subdomain, data);
+  GET (endpoint, data, version, subdomain, partner) {
+    return this._request('GET', endpoint, version, subdomain, data, partner);
   }
 
-  authGET (endpoint, data, version, subdomain) {
-    return this._request('GET', endpoint, version, subdomain, data, true);
+  authGET (endpoint, data, version, subdomain, partner) {
+    return this._request('GET', endpoint, version, subdomain, data, partner, true);
   }
 
-  POST (endpoint, data, version, subdomain) {
-    return this._request('POST', endpoint, version, subdomain, data);
+  POST (endpoint, data, version, subdomain, partner) {
+    return this._request('POST', endpoint, version, subdomain, data, partner);
   }
 
-  authPOST (endpoint, data, version, subdomain) {
-    return this._request('POST', endpoint, version, subdomain, data, true);
+  authPOST (endpoint, data, version, subdomain, partner) {
+    return this._request('POST', endpoint, version, subdomain, data, partner, true);
   }
 
-  PATCH (endpoint, data, version, subdomain) {
-    return this._request('PATCH', endpoint, version, subdomain, data);
+  PATCH (endpoint, data, version, subdomain, partner) {
+    return this._request('PATCH', endpoint, version, subdomain, data, partner);
   }
 
-  authPATCH (endpoint, data, version, subdomain) {
-    return this._request('PATCH', endpoint, version, subdomain, data, true);
+  authPATCH (endpoint, data, version, subdomain, partner) {
+    return this._request('PATCH', endpoint, version, subdomain, data, partner, true);
   }
 
-  _request (method, endpoint, version, subdomain, data, authorized) {
+  _request (method, endpoint, version, subdomain, data, partner, authorized) {
     assert(this._apiKey, 'API key required');
     assert(!authorized || this.hasAccount, "Can't make authorized request without an account");
 
-    var url = this._url(subdomain, version, endpoint);
+    var url = this._url(subdomain, version, endpoint, partner);
 
     var headers = {};
 
