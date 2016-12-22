@@ -15,7 +15,7 @@ class BankLink {
     const getAccounts = (token) => {
       return this.api.authPOST('user/bankEnumerate', {
         public_token: token
-      }, 'v1', 'api', null);
+      }, 'v1');
     };
 
     return getAccounts(token).then(filterAccounts);
@@ -28,7 +28,7 @@ class BankLink {
       lastname: obj.lastName,
       public_token: obj.token,
       _id: obj.id
-    }, 'v1', 'api', null);
+    }, 'v1');
   }
 }
 
