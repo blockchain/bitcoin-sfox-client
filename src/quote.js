@@ -16,7 +16,7 @@ class Quote extends Exchange.Quote {
 
     this._id = obj.quote_id;
     this._expiresAt = expiresAt;
-    this._rate = (obj.quote_amount / obj.base_amount).toFixed(2);
+    this._rate = obj.rate;
 
     this._baseCurrency = baseCurrency.toUpperCase();
     this._baseAmount = isBTC(this._baseCurrency) ? btcAmount : usdAmount;
