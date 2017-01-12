@@ -1,6 +1,6 @@
 {
   "name": "bitcoin-sfox-client",
-  "version": "0.1.2",
+  "version": "0.1.5",
   "description": "Buy and sell Bitcoin using SFOX API.",
   "repository": {
     "type": "git",
@@ -25,7 +25,7 @@
   ],
   "license": "ISC",
   "dependencies": {
-    "bitcoin-exchange-client": "blockchain/bitcoin-exchange-client#master"
+    "bitcoin-exchange-client": "0.1.*"
   },
   "devDependencies": {
     "babel-polyfill": "6.16.*",
