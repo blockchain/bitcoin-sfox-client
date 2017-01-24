@@ -12,11 +12,6 @@ class API extends Exchange.API {
   get apiKey () { return this._apiKey; }
   set apiKey (value) { this._apiKey = value; }
 
-  set production (value) {
-    assert(Exchange.Helpers.isBoolean(value), 'Boolean expected');
-    this._production = value;
-  }
-
   get partnerId () { return this._partnerId; }
   set partnerId (value) { this._partnerId = value; }
 

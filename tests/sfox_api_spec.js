@@ -53,13 +53,6 @@ describe('SFOX API', function () {
           expect(api.partnerId).toEqual('blockchain');
         })
       );
-
-      describe('production', () =>
-        it('should set _production', function () {
-          api.production = true;
-          expect(api._production).toEqual(true);
-        })
-      );
     });
 
     describe('_url()', function () {
