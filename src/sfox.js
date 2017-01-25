@@ -86,7 +86,7 @@ class SFOX extends Exchange.Exchange {
     };
 
     var getToken = () => {
-      return self.delegate.getToken.bind(self.delegate)('sfox');
+      return self.delegate.getToken.bind(self.delegate)('sfox', {mobile: true});
     };
 
     var doSignup = function (token) {
