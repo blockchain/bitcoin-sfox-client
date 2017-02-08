@@ -22,10 +22,8 @@ class BankLink {
 
   setAccount (obj) {
     return this._api.authPOST('account/bankToken', {
-      name: ' ',
-      firstname: obj.firstName,
-      lastname: obj.lastName,
       public_token: obj.token,
+      name: obj.name,
       _id: obj.id
     });
   }
