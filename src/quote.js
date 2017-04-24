@@ -11,11 +11,13 @@ class Quote extends Exchange.Quote {
     super(api, delegate, Trade, PaymentMethod, debug);
 
     var expiresAt = new Date(obj.expires_on);
+    var timeOfRequest = new Date(obj.current_time);
     var btcAmount = toSatoshi(obj.base_amount);
     var usdAmount = toCents(obj.quote_amount);
 
     this._id = obj.quote_id;
     this._expiresAt = expiresAt;
+    this._timeOfRequest = timeOfRequest;
     this._rate = obj.rate;
 
     this._baseCurrency = baseCurrency.toUpperCase();

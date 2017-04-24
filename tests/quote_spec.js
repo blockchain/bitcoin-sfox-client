@@ -23,6 +23,8 @@ describe('SFOX Quote', function () {
       base_amount: '0.05544907',
       expires_on: 1476075783431,
       expires_on_str: '2016-10-10T05:03:03Z',
+      current_time: 1476075813431,
+      current_time_str: '2016-10-10T05:03:33Z',
       fee_amount: '0.3505',
       fee_currency: 'usd',
       quote_id: 'df69eefd-77bf-432c-7f22-6d7c40b40384'
@@ -38,6 +40,7 @@ describe('SFOX Quote', function () {
     describe('new Quote()', function () {
       it('should construct a Quote', function () {
         expect(q.expiresAt).toEqual(new Date(obj.expires_on));
+        expect(q.timeOfRequest).toEqual(new Date(obj.current_time));
         expect(q.baseCurrency).toBe('USD');
         expect(q.quoteCurrency).toBe('BTC');
         expect(q.baseAmount).toBe(3505);
