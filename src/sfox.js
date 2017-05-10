@@ -38,10 +38,10 @@ var BankLink = require('./bank-link');
 var assert = require('assert');
 
 class SFOX extends Exchange.Exchange {
-  constructor (object, delegate) {
-    super(delegate, Trade, Quote, PaymentMedium, BankLink);
+  constructor (obj, delegate) {
+    const api = new API();
+    super(obj, delegate, api, Trade, Quote, PaymentMedium);
 
-    var obj = object || {};
     this._partner_id = null;
     this._user = obj.user;
     this._auto_login = obj.auto_login;
@@ -49,20 +49,15 @@ class SFOX extends Exchange.Exchange {
     this._api = new API();
     this._bankLink = new BankLink(this._api);
     this._api._accountToken = this._accountToken;
-
-    this._trades = [];
-    if (obj.trades) {
-      for (var i = 0; i < obj.trades.length; i++) {
-        var trade = new Trade(obj.trades[i], this._api, delegate, this);
-        trade.debug = this._debug;
-        this._trades.push(trade);
-      }
-    }
   }
 
   get profile () { return this._profile || null; }
 
   get hasAccount () { return Boolean(this._accountToken); }
+
+  getTrades () {
+    return super.getTrades(Quote);
+  }
 
   get buyCurrencies () { return ['USD']; }
 

@@ -58,15 +58,6 @@ describe('SFOX Trade', function () {
         // expect(t._api).toBe(api)
         // expect(t._id).toBe(tradeJSON.id)
         // more fields
-
-      it('should warn if there is an unknown state type', function () {
-        tradeJSON.status = 'unknown';
-        spyOn(window.console, 'warn');
-        // eslint-disable-next-line no-new
-        new Trade(tradeJSON, api, delegate);
-        expect(window.console.warn).toHaveBeenCalled();
-        expect(window.console.warn.calls.argsFor(0)[1]).toEqual('unknown');
-      });
     })
   );
 

@@ -1,21 +1,19 @@
-'use strict';
-
-var assert = require('assert');
-
 var Exchange = require('bitcoin-exchange-client');
 
 class Trade extends Exchange.Trade {
   constructor (obj, api, delegate) {
-    super(api, delegate);
+    super(obj, api, delegate);
 
-    assert(obj, 'JSON missing');
-    this._id = obj.id.toLowerCase();
-    this.set(obj);
+    if (obj !== null) {
+      this.setFromJSON(obj);
+    }
   }
 
   get isBuy () { return this._is_buy; }
 
   setFromAPI (obj) {
+    this._id = obj.id.toLowerCase();
+
     if ([
       'pending',
       'failed',
@@ -69,6 +67,8 @@ class Trade extends Exchange.Trade {
   }
 
   setFromJSON (obj) {
+    this._id = obj.id.toLowerCase();
+
     /* istanbul ignore if */
     if (this.debug) {
       console.info('Trade ' + this.id + ' from JSON');
@@ -137,6 +137,10 @@ class Trade extends Exchange.Trade {
     this._delegate.serializeExtraFields(serialized, this);
 
     return serialized;
+  }
+
+  static idFromAPI (obj) {
+    return obj.id;
   }
 
   static filteredTrades (trades) {
