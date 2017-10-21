@@ -42,11 +42,13 @@ class Quote extends Exchange.Quote {
     };
 
     const getQuote = (_baseAmount) => {
+      let action = _baseAmount < 0 ? 'buy' : 'sell';
+
       return api.POST('quote/', {
-        action: 'buy',
+        action: action,
         base_currency: 'btc',
         quote_currency: 'usd',
-        amount: _baseAmount,
+        amount: Math.abs(_baseAmount),
         amount_currency: baseCurrency.toLowerCase()
       }, 'v1', 'quotes');
     };
