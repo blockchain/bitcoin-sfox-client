@@ -1,16 +1,15 @@
 'use strict';
 
-var assert = require('assert');
-
 var Exchange = require('bitcoin-exchange-client');
 
 class Trade extends Exchange.Trade {
   constructor (obj, api, delegate) {
     super(obj, api, delegate);
 
-    assert(obj, 'JSON missing');
-    this._id = obj.id.toLowerCase();
-    this.set(obj);
+    if (obj !== null) {
+      this._id = obj.id.toLowerCase();
+      this.set(obj);
+    }
   }
 
   get isBuy () { return this._is_buy; }
@@ -65,6 +64,10 @@ class Trade extends Exchange.Trade {
     if (this._outCurrency === 'BTC') {
       this._txHash = obj.blockchain_tx_hash || this._txHash;
       this._receiveAddress = obj.address;
+    }
+
+    if (!this.id) {
+      this._id = obj.id;
     }
   }
 
@@ -177,6 +180,10 @@ class Trade extends Exchange.Trade {
       });
     };
     return super.sell(quote, '', request);
+  }
+
+  static idFromAPI (obj) {
+    return obj.id;
   }
 }
 

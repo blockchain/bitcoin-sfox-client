@@ -62,6 +62,10 @@ class SFOX extends Exchange.Exchange {
 
   get bankLink () { return this._bankLink; }
 
+  getTrades () {
+    return super.getTrades(Quote);
+  }
+
   // Email must be set and verified
   // Mobile must be set and verified
   signup () {
