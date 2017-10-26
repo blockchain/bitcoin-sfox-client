@@ -39,25 +39,17 @@ var assert = require('assert');
 
 class SFOX extends Exchange.Exchange {
   constructor (object, delegate) {
-    super(delegate, Trade, Quote, PaymentMedium, BankLink);
+    const api = new API();
+    super(object, delegate, api, Trade, Quote, PaymentMedium);
 
     var obj = object || {};
     this._partner_id = null;
     this._user = obj.user;
     this._auto_login = obj.auto_login;
     this._accountToken = obj.account_token;
-    this._api = new API();
+    this._api = api;
     this._bankLink = new BankLink(this._api);
     this._api._accountToken = this._accountToken;
-
-    this._trades = [];
-    if (obj.trades) {
-      for (var i = 0; i < obj.trades.length; i++) {
-        var trade = new Trade(obj.trades[i], this._api, delegate, this);
-        trade.debug = this._debug;
-        this._trades.push(trade);
-      }
-    }
   }
 
   get profile () { return this._profile || null; }

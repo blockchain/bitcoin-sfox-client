@@ -6,7 +6,7 @@ var Exchange = require('bitcoin-exchange-client');
 
 class Trade extends Exchange.Trade {
   constructor (obj, api, delegate) {
-    super(api, delegate);
+    super(obj, api, delegate);
 
     assert(obj, 'JSON missing');
     this._id = obj.id.toLowerCase();

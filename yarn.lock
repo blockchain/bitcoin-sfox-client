@@ -711,9 +711,9 @@ binary-extensions@^1.0.0:
   version "1.10.0"
   resolved "https://registry.npmjs.org/binary-extensions/-/binary-extensions-1.10.0.tgz#9aeb9a6c5e88638aad171e167f5900abe24835d0"
 
-bitcoin-exchange-client@v0.2.*:
-  version "0.2.2"
-  resolved "https://registry.npmjs.org/bitcoin-exchange-client/-/bitcoin-exchange-client-0.2.2.tgz#8d5370a3ac20a0d3fc75e8a3d76bbc285a35f7ec"
+bitcoin-exchange-client@^0.5.0:
+  version "0.5.0"
+  resolved "https://registry.npmjs.org/bitcoin-exchange-client/-/bitcoin-exchange-client-0.5.0.tgz#e9d70ca7cd17909fbae86d79c43c4367fcda02f9"
   dependencies:
     isomorphic-fetch "^2.2.0"
 
