@@ -31,6 +31,13 @@ class PaymentAccount extends ExchangePaymentAccount {
     return super.buy();
   }
 
+  sell () {
+    if (this.status !== 'active') {
+      return Promise.reject('ACH_ACCOUNT_INACTIVE');
+    }
+    return super.sell();
+  }
+
   verify (amount1, amount2) {
     assert(amount1 && amount2, 'Split amounts required');
     return this._api.authPOST('payment-methods/verify', {

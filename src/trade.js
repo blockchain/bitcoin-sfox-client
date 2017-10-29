@@ -1,16 +1,15 @@
 'use strict';
 
-var assert = require('assert');
-
 var Exchange = require('bitcoin-exchange-client');
 
 class Trade extends Exchange.Trade {
   constructor (obj, api, delegate) {
-    super(api, delegate);
+    super(obj, api, delegate);
 
-    assert(obj, 'JSON missing');
-    this._id = obj.id.toLowerCase();
-    this.set(obj);
+    if (obj !== null) {
+      this._id = obj.id.toLowerCase();
+      this.set(obj);
+    }
   }
 
   get isBuy () { return this._is_buy; }
@@ -44,14 +43,14 @@ class Trade extends Exchange.Trade {
 
     this._sendAmount = this._inCurrency === 'BTC'
       ? Exchange.Helpers.toSatoshi(obj.quote_amount)
-      : Exchange.Helpers.toCents(obj.quote_amount);
+      : obj.quote_amount;
 
     if (this._inCurrency === 'BTC') {
       this._inAmount = Exchange.Helpers.toSatoshi(obj.quote_amount);
-      this._outAmount = Exchange.Helpers.toCents(obj.base_amount);
-      this._outAmountExpected = Exchange.Helpers.toCents(obj.base_amount);
+      this._outAmount = obj.base_amount;
+      this._outAmountExpected = obj.base_amount;
     } else {
-      this._inAmount = Exchange.Helpers.toCents(obj.quote_amount);
+      this._inAmount = obj.quote_amount;
       this._outAmount = Exchange.Helpers.toSatoshi(obj.base_amount);
       this._outAmountExpected = Exchange.Helpers.toSatoshi(obj.base_amount);
     }
@@ -65,6 +64,10 @@ class Trade extends Exchange.Trade {
     if (this._outCurrency === 'BTC') {
       this._txHash = obj.blockchain_tx_hash || this._txHash;
       this._receiveAddress = obj.address;
+    }
+
+    if (!this.id) {
+      this._id = obj.id;
     }
   }
 
@@ -164,6 +167,23 @@ class Trade extends Exchange.Trade {
       });
     };
     return super.buy(quote, medium, request);
+  }
+
+  static sell (quote, paymentMethodId) {
+    const request = () => {
+      return quote.api.authPOST('transaction', {
+        quote_id: quote.id,
+        destination: {
+          type: 'payment_method',
+          payment_method_id: paymentMethodId
+        }
+      });
+    };
+    return super.sell(quote, '', request);
+  }
+
+  static idFromAPI (obj) {
+    return obj.id;
   }
 }
 

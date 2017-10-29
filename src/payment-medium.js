@@ -53,6 +53,12 @@ class PaymentMedium extends ExchangePaymentMedium {
     let acc = account.accountWithQuote(this._quote);
     return acc.buy();
   }
+
+  sell (account) {
+    assert(account, 'Specify account');
+    let acc = account.accountWithQuote(this._quote);
+    return acc.sell();
+  }
 }
 
 module.exports = PaymentMedium;

@@ -51,11 +51,11 @@ describe('SFOX Bank Link', function () {
 
   describe('getAccounts', function () {
     it('should return a list of bank accounts', function () {
-      spyOn(BankLink, 'getAccounts').and.callThrough();
+      spyOn(bl, 'getAccounts').and.callThrough();
       let promise = bl.getAccounts('12345');
       let testCalls = () =>
 
-      expect(BankLink.getAccounts).toHaveBeenCalled();
+      expect(bl.getAccounts).toHaveBeenCalled();
 
       return promise.then(testCalls);
     })
@@ -63,11 +63,11 @@ describe('SFOX Bank Link', function () {
 
   describe('setAccount', function () {
     it('should set an account', function () {
-      spyOn(BankLink, 'setAccount').and.callThrough();
+      spyOn(bl, 'setAccount').and.callThrough();
       let promise = bl.setAccount(obj);
       let testCalls = () =>
 
-      expect(BankLink.setAccount).toHaveBeenCalled();
+      expect(bl.setAccount).toHaveBeenCalled();
 
       return promise.then(testCalls);
     });
