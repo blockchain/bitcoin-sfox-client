@@ -1,6 +1,6 @@
 {
   "name": "bitcoin-sfox-client",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Buy and sell Bitcoin using SFOX API.",
   "repository": {
     "type": "git",
