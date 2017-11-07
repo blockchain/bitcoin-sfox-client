@@ -3,6 +3,8 @@ var assert = require('assert');
 class Profile {
   constructor (obj, api) {
     this._api = api;
+    this._canBuy = obj.account.can_buy;
+    this._canSell = obj.account.can_sell;
     this._verification_status = obj.account.verification_status;
     this._limits = obj.account.limits.available;
   }
@@ -17,6 +19,9 @@ class Profile {
 
   get lastName () { return this._lastName; }
   set lastName (val) { this._lastName = val; }
+
+  get canBuy () { return this._canBuy; }
+  get canSell () { return this._canSell; }
 
   get address () {
     return {
@@ -47,9 +52,6 @@ class Profile {
   }
 
   get verificationStatus () { return this._verification_status; }
-
-  get canBuy () { return this._can_buy; }
-  get canSell () { return this._can_sell; }
 
   get limits () { return this._limits; }
 
