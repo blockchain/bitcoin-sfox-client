@@ -20,6 +20,8 @@ class Profile {
   get lastName () { return this._lastName; }
   set lastName (val) { this._lastName = val; }
 
+  get completeName () { return Boolean(this.firstName && this.lastName); }
+
   get canBuy () { return this._canBuy; }
   get canSell () { return this._canSell; }
 
@@ -32,8 +34,13 @@ class Profile {
       city: this._city,
       state: this._state,
       zipcode: this._zipcode,
-      country: this._country
+      country: this._country,
+      complete: Boolean(this._street1 && this._street2 && this._city && this._state && this._zipcode && this._country)
     };
+  }
+
+  get setupComplete () {
+    return Boolean(this.completeName && this.address.complete && this.dateOfBirth && this.ssn);
   }
 
   get dateOfBirth () { return this._dateOfBirth; }
