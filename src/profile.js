@@ -14,7 +14,7 @@ class Profile {
   get firstName () { return this._firstName; }
   set firstName (val) { this._firstName = val; }
 
-  get middleName () { return this._fullName; }
+  get middleName () { return this._middleName; }
   set middleName (val) { this._middleName = val; }
 
   get lastName () { return this._lastName; }
