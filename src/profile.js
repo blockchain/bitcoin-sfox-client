@@ -62,6 +62,12 @@ class Profile {
 
   get limits () { return this._limits; }
 
+  get level () {
+    // fake rejected level
+    if (this.verificationStatus.level === 'needs_documents' && !this.canBuy && !this.canSell) return 'rejected';
+    else return this.verificationStatus.level;
+  }
+
   static fetch (api) {
     return api.authGET('account').then(function (res) {
       var profile = new Profile(res, api);
@@ -121,8 +127,8 @@ class Profile {
       birth_year: this.dateOfBirth.getFullYear(),
       identity: this.identity
     }).then((res) => {
-      this._can_buy = res.account.can_buy;
-      this._can_sell = res.account.can_sell;
+      this._canBuy = res.account.can_buy;
+      this._canSell = res.account.can_sell;
       this._limits = res.account.limits.available;
       this._verification_status = res.account.verification_status;
     });
