@@ -1,6 +1,7 @@
 'use strict';
 
 var Exchange = require('bitcoin-exchange-client');
+var { toSatoshi } = Exchange.Helpers;
 
 class Trade extends Exchange.Trade {
   constructor (obj, api, delegate) {
@@ -38,21 +39,17 @@ class Trade extends Exchange.Trade {
 
     this._is_buy = obj.action === 'buy';
 
-    this._inCurrency = obj.quote_currency.toUpperCase();
-    this._outCurrency = obj.base_currency.toUpperCase();
-
-    this._sendAmount = this._inCurrency === 'BTC'
-      ? Exchange.Helpers.toSatoshi(obj.quote_amount)
-      : obj.quote_amount;
+    this._inCurrency = this._is_buy ? obj.quote_currency.toUpperCase() : obj.base_currency.toUpperCase();
+    this._outCurrency = this._is_buy ? obj.base_currency.toUpperCase() : obj.quote_currency.toUpperCase();
 
     if (this._inCurrency === 'BTC') {
-      this._inAmount = Exchange.Helpers.toSatoshi(obj.quote_amount);
-      this._outAmount = obj.base_amount;
-      this._outAmountExpected = obj.base_amount;
+      this._inAmount = toSatoshi(obj.base_amount);
+      this._sendAmount = toSatoshi(obj.base_amount);
+      this._receiveAmount = obj.quote_amount;
     } else {
-      this._inAmount = obj.quote_amount;
-      this._outAmount = Exchange.Helpers.toSatoshi(obj.base_amount);
-      this._outAmountExpected = Exchange.Helpers.toSatoshi(obj.base_amount);
+      this._inAmount = toSatoshi(obj.quote_amount);
+      this._sendAmount = toSatoshi(obj.quote_amount);
+      this._receiveAmount = obj.base_amount;
     }
 
     /* istanbul ignore if */
