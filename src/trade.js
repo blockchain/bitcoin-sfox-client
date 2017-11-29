@@ -60,12 +60,13 @@ class Trade extends Exchange.Trade {
 
     if (this._outCurrency === 'BTC') {
       this._txHash = obj.blockchain_tx_hash || this._txHash;
-      this._receiveAddress = obj.address;
     }
 
     if (!this.id) {
       this._id = obj.id;
     }
+
+    this._receiveAddress = obj.address;
   }
 
   setFromJSON (obj) {
