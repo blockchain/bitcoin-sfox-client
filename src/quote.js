@@ -34,6 +34,14 @@ class Quote extends Exchange.Quote {
     return this._rate;
   }
 
+  get feeAmount () {
+    return this._feeAmount;
+  }
+
+  get feeCurrency () {
+    return this._feeCurrency;
+  }
+
   static getQuote (api, delegate, amount, baseCurrency, quoteCurrency, debug) {
     const processQuote = (quote) => {
       let q = new Quote(quote, baseCurrency, api, delegate);
