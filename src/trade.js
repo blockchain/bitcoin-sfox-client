@@ -46,6 +46,8 @@ class Trade extends Exchange.Trade {
       this._inAmount = toSatoshi(obj.base_amount);
       this._sendAmount = toSatoshi(obj.base_amount);
       this._receiveAmount = obj.quote_amount;
+      this._feeAmount = obj.fee_amount;
+      this._feeCurrency = obj.fee_currency;
     } else {
       this._inAmount = toSatoshi(obj.quote_amount);
       this._sendAmount = toSatoshi(obj.quote_amount);
