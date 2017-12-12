@@ -21,10 +21,10 @@ class Quote extends Exchange.Quote {
     this._rate = obj.rate;
 
     this._baseCurrency = baseCurrency.toUpperCase();
-    this._baseAmount = isBTC(this._baseCurrency) ? btcAmount : usdAmount;
+    this._baseAmount = isBTC(this._baseCurrency) ? btcAmount : parseFloat(usdAmount).toFixed(2);
 
     this._quoteCurrency = flipCurrency(this._baseCurrency);
-    this._quoteAmount = isBTC(this._quoteCurrency) ? btcAmount : usdAmount;
+    this._quoteAmount = isBTC(this._quoteCurrency) ? btcAmount : parseFloat(usdAmount).toFixed(2);
 
     this._feeAmount = obj.fee_amount;
     this._feeCurrency = obj.fee_currency.toUpperCase();
