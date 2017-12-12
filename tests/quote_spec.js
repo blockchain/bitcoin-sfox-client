@@ -52,7 +52,7 @@ describe('SFOX Quote', function () {
         obj.quote_amount = 35.05; // 35.05 * 100 = 3504.9999999999995 in javascript
         obj.base_amount = 0.03505;
         q = new Quote(obj, 'usd', {}, {});
-        expect(q.baseAmount).toEqual(35.05);
+        expect(q.baseAmount).toEqual('35.05');
         expect(q.quoteAmount).toEqual(3505000);
       });
 
@@ -63,7 +63,7 @@ describe('SFOX Quote', function () {
         obj.base_amount = 0.00003505;
         q = new Quote(obj, 'btc', {}, {});
         expect(q.baseAmount).toEqual(3505);
-        expect(q.quoteAmount).toEqual(35.05);
+        expect(q.quoteAmount).toEqual('35.05');
       });
     });
 
