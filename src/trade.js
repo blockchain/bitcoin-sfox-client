@@ -45,7 +45,9 @@ class Trade extends Exchange.Trade {
     if (this._inCurrency === 'BTC') {
       this._inAmount = toSatoshi(obj.base_amount);
       this._sendAmount = toSatoshi(obj.base_amount);
-      this._receiveAmount = obj.quote_amount;
+      this._feeAmount = obj.fee_amount;
+      this._feeCurrency = obj.fee_currency;
+      this._receiveAmount = obj.quote_amount - obj.fee_amount;
     } else {
       this._inAmount = toSatoshi(obj.quote_amount);
       this._sendAmount = toSatoshi(obj.quote_amount);
@@ -59,14 +61,12 @@ class Trade extends Exchange.Trade {
     }
     this._createdAt = new Date(obj.created_at);
 
-    if (this._outCurrency === 'BTC') {
-      this._txHash = obj.blockchain_tx_hash || this._txHash;
-      this._receiveAddress = obj.address;
-    }
-
     if (!this.id) {
       this._id = obj.id;
     }
+
+    this._receiveAddress = obj.address;
+    this._txHash = obj.blockchain_tx_hash || this._txHash;
   }
 
   setFromJSON (obj) {
