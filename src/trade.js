@@ -110,17 +110,9 @@ class Trade extends Exchange.Trade {
             .then(this._delegate.save.bind(this._delegate));
   }
 
-  // QA tool:
-  fakeAchSuccess () {
-    let options = { id: this.id };
-    return this._api.authPOST('testing/approvedeposit', options)
-      .then(this.set.bind(this))
-      .then(this._delegate.save.bind(this._delegate));
-  }
-
-  // QA tool:
-  fakeAchFail () {
-    let options = { id: this.id, status: 'rejected' };
+  // QA Tool
+  fakeStatus (status) {
+    let options = { id: this.id, status: status };
     return this._api.authPOST('testing/changestatus', options)
       .then(this.set.bind(this))
       .then(this._delegate.save.bind(this._delegate));
