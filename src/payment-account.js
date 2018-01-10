@@ -12,7 +12,7 @@ class PaymentAccount extends ExchangePaymentAccount {
     this._status = obj.status;
     this._routingNumber = obj.routing_number;
     this._accountNumber = obj.account_number;
-    this._name = obj.nickname;
+    this._name = obj.name || obj.nickname;
     this._accountType = obj.account_type;
   }
 
@@ -23,6 +23,8 @@ class PaymentAccount extends ExchangePaymentAccount {
   get accountNumber () { return this._accountNumber; }
 
   get accountType () { return this._accountType; }
+
+  get name () { return this._name; }
 
   buy () {
     if (this.status !== 'active') {

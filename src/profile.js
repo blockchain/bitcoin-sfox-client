@@ -14,11 +14,13 @@ class Profile {
   get firstName () { return this._firstName; }
   set firstName (val) { this._firstName = val; }
 
-  get middleName () { return this._fullName; }
+  get middleName () { return this._middleName; }
   set middleName (val) { this._middleName = val; }
 
   get lastName () { return this._lastName; }
   set lastName (val) { this._lastName = val; }
+
+  get completeName () { return Boolean(this.firstName && this.lastName); }
 
   get canBuy () { return this._canBuy; }
   get canSell () { return this._canSell; }
@@ -32,8 +34,13 @@ class Profile {
       city: this._city,
       state: this._state,
       zipcode: this._zipcode,
-      country: this._country
+      country: this._country,
+      complete: Boolean(this._street1 && this._city && this._state && this._zipcode && this._country)
     };
+  }
+
+  get setupComplete () {
+    return Boolean(this.completeName && this.address.complete && this.dateOfBirth && this.ssn);
   }
 
   get dateOfBirth () { return this._dateOfBirth; }
@@ -54,6 +61,12 @@ class Profile {
   get verificationStatus () { return this._verification_status; }
 
   get limits () { return this._limits; }
+
+  get level () {
+    // fake rejected level
+    if (this.verificationStatus.level === 'needs_documents' && !this.canBuy && !this.canSell) return 'rejected';
+    else return this.verificationStatus.level;
+  }
 
   static fetch (api) {
     return api.authGET('account').then(function (res) {
@@ -114,8 +127,8 @@ class Profile {
       birth_year: this.dateOfBirth.getFullYear(),
       identity: this.identity
     }).then((res) => {
-      this._can_buy = res.account.can_buy;
-      this._can_sell = res.account.can_sell;
+      this._canBuy = res.account.can_buy;
+      this._canSell = res.account.can_sell;
       this._limits = res.account.limits.available;
       this._verification_status = res.account.verification_status;
     });

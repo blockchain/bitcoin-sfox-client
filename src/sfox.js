@@ -44,6 +44,7 @@ class SFOX extends Exchange.Exchange {
 
     var obj = object || {};
     this._partner_id = null;
+    this._hasSeen = false;
     this._user = obj.user;
     this._auto_login = obj.auto_login;
     this._accountToken = obj.account_token;
@@ -61,6 +62,10 @@ class SFOX extends Exchange.Exchange {
   get sellCurrencies () { return ['USD']; }
 
   get bankLink () { return this._bankLink; }
+
+  get hasSeen () { return this._hasSeen; }
+
+  setHasSeen (val) { this._hasSeen = val; }
 
   getTrades () {
     return super.getTrades(Quote);
@@ -95,6 +100,7 @@ class SFOX extends Exchange.Exchange {
 
     var saveMetadata = function (res) {
       this._user = res.account.id;
+      this._hasSeen = res.hasSeen;
       this._accountToken = res.token;
       this._api._accountToken = this._accountToken;
       return this._delegate.save.bind(this._delegate)().then(function () { return res; });
@@ -117,6 +123,7 @@ class SFOX extends Exchange.Exchange {
   toJSON () {
     var sfox = {
       user: this._user,
+      has_seen: this._hasSeen,
       account_token: this._accountToken,
       auto_login: this._auto_login,
       trades: this._TradeClass.filteredTrades(this._trades)

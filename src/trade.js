@@ -1,6 +1,7 @@
 'use strict';
 
 var Exchange = require('bitcoin-exchange-client');
+var { toSatoshi } = Exchange.Helpers;
 
 class Trade extends Exchange.Trade {
   constructor (obj, api, delegate) {
@@ -38,22 +39,21 @@ class Trade extends Exchange.Trade {
 
     this._is_buy = obj.action === 'buy';
 
-    this._inCurrency = obj.quote_currency.toUpperCase();
-    this._outCurrency = obj.base_currency.toUpperCase();
-
-    this._sendAmount = this._inCurrency === 'BTC'
-      ? Exchange.Helpers.toSatoshi(obj.quote_amount)
-      : obj.quote_amount;
+    this._inCurrency = this._is_buy ? obj.quote_currency.toUpperCase() : obj.base_currency.toUpperCase();
+    this._outCurrency = this._is_buy ? obj.base_currency.toUpperCase() : obj.quote_currency.toUpperCase();
 
     if (this._inCurrency === 'BTC') {
-      this._inAmount = Exchange.Helpers.toSatoshi(obj.quote_amount);
-      this._outAmount = obj.base_amount;
-      this._outAmountExpected = obj.base_amount;
+      this._inAmount = toSatoshi(obj.base_amount);
+      this._sendAmount = toSatoshi(obj.base_amount);
+      this._feeAmount = obj.fee_amount;
+      this._feeCurrency = obj.fee_currency;
+      this._receiveAmount = obj.quote_amount - obj.fee_amount;
     } else {
-      this._inAmount = obj.quote_amount;
-      this._outAmount = Exchange.Helpers.toSatoshi(obj.base_amount);
-      this._outAmountExpected = Exchange.Helpers.toSatoshi(obj.base_amount);
+      this._inAmount = toSatoshi(obj.quote_amount);
+      this._sendAmount = toSatoshi(obj.quote_amount);
+      this._receiveAmount = obj.base_amount;
     }
+    this._feeAmount = obj.fee_amount;
 
     /* istanbul ignore if */
     if (this.debug) {
@@ -61,14 +61,12 @@ class Trade extends Exchange.Trade {
     }
     this._createdAt = new Date(obj.created_at);
 
-    if (this._outCurrency === 'BTC') {
-      this._txHash = obj.blockchain_tx_hash || this._txHash;
-      this._receiveAddress = obj.address;
-    }
-
     if (!this.id) {
       this._id = obj.id;
     }
+
+    this._receiveAddress = obj.address;
+    this._txHash = obj.blockchain_tx_hash || this._txHash;
   }
 
   setFromJSON (obj) {
@@ -112,17 +110,9 @@ class Trade extends Exchange.Trade {
             .then(this._delegate.save.bind(this._delegate));
   }
 
-  // QA tool:
-  fakeAchSuccess () {
-    let options = { id: this.id };
-    return this._api.authPOST('testing/approvedeposit', options)
-      .then(this.set.bind(this))
-      .then(this._delegate.save.bind(this._delegate));
-  }
-
-  // QA tool:
-  fakeAchFail () {
-    let options = { id: this.id, status: 'rejected' };
+  // QA Tool
+  fakeStatus (status) {
+    let options = { id: this.id, status: status };
     return this._api.authPOST('testing/changestatus', options)
       .then(this.set.bind(this))
       .then(this._delegate.save.bind(this._delegate));
