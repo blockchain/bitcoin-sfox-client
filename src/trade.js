@@ -38,22 +38,20 @@ class Trade extends Exchange.Trade {
     }
 
     this._is_buy = obj.action === 'buy';
-
+    this._feeAmount = obj.fee_amount;
     this._inCurrency = this._is_buy ? obj.quote_currency.toUpperCase() : obj.base_currency.toUpperCase();
     this._outCurrency = this._is_buy ? obj.base_currency.toUpperCase() : obj.quote_currency.toUpperCase();
 
     if (this._inCurrency === 'BTC') {
       this._inAmount = toSatoshi(obj.base_amount);
       this._sendAmount = toSatoshi(obj.base_amount);
-      this._feeAmount = obj.fee_amount;
       this._feeCurrency = obj.fee_currency;
-      this._receiveAmount = obj.quote_amount - obj.fee_amount;
+      this._receiveAmount = obj.quote_amount;
     } else {
       this._inAmount = toSatoshi(obj.quote_amount);
       this._sendAmount = toSatoshi(obj.quote_amount);
       this._receiveAmount = obj.base_amount;
     }
-    this._feeAmount = obj.fee_amount;
 
     /* istanbul ignore if */
     if (this.debug) {
