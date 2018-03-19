@@ -66,7 +66,7 @@ class Trade extends Exchange.Trade {
     }
 
     this._receiveAddress = obj.address;
-    this._txHash = obj.blockchain_tx_hash || this._txHash;
+    this._txHash = obj.blockchain_tx_hash || (!this._is_buy ? this._txHash : null);
   }
 
   setFromJSON (obj) {
