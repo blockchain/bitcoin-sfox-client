@@ -15,6 +15,8 @@ class Trade extends Exchange.Trade {
 
   get isBuy () { return this._is_buy; }
 
+  get expectedDelivery () { return this._expectedDelivery; }
+
   setFromAPI (obj) {
     if ([
       'pending',
@@ -39,6 +41,7 @@ class Trade extends Exchange.Trade {
 
     this._is_buy = obj.action === 'buy';
     this._feeAmount = obj.fee_amount;
+    this._expectedDelivery = obj.expected_delivery;
     this._inCurrency = this._is_buy ? obj.quote_currency.toUpperCase() : obj.base_currency.toUpperCase();
     this._outCurrency = this._is_buy ? obj.base_currency.toUpperCase() : obj.quote_currency.toUpperCase();
 
