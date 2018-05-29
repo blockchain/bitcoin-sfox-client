@@ -96,7 +96,7 @@ class Trade extends Exchange.Trade {
 
   static fetchAll (api, length) {
     if (length) return api.authGET('transaction', { page_size: length });
-    else return api.authGET('transaction')
+    else return api.authGET('transaction');
   }
 
   refresh () {
