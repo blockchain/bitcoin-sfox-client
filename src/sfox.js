@@ -67,8 +67,8 @@ class SFOX extends Exchange.Exchange {
 
   setHasSeen (val) { this._hasSeen = val; }
 
-  getTrades () {
-    return super.getTrades(Quote);
+  getTrades (length) {
+    return super.getTrades(Quote, length);
   }
 
   // Email must be set and verified
