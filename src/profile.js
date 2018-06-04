@@ -7,6 +7,7 @@ class Profile {
     this._canSell = obj.account.can_sell;
     this._verification_status = obj.account.verification_status;
     this._limits = obj.account.limits.available;
+    this._processingTimes = obj.processing_times;
   }
 
   get api () { return this._api; }
@@ -24,6 +25,8 @@ class Profile {
 
   get canBuy () { return this._canBuy; }
   get canSell () { return this._canSell; }
+
+  get processingTimes () { return this._processingTimes; }
 
   get address () {
     return {
@@ -130,6 +133,7 @@ class Profile {
       this._canBuy = res.account.can_buy;
       this._canSell = res.account.can_sell;
       this._limits = res.account.limits.available;
+      this._processingTimes = res.processing_times;
       this._verification_status = res.account.verification_status;
     });
   }
