@@ -144,6 +144,14 @@ class Profile {
       filename: filename
     });
   }
+
+  fetchJumioToken () {
+    return this.api.authPOST('account/verify/enhanced')
+  }
+
+  fetchJumioStatus (id) {
+    return this.api.authGET(`account/verify/enhanced/${id}`)
+  }
 }
 
 module.exports = Profile;
