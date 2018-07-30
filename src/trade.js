@@ -9,11 +9,14 @@ class Trade extends Exchange.Trade {
 
     if (obj !== null) {
       this._id = obj.id.toLowerCase();
+      this._speedupAvailable = obj.speedup_available;
       this.set(obj);
     }
   }
 
   get isBuy () { return this._is_buy; }
+
+  get speedupAvailable () { return this._speedupAvailable; }
 
   get expectedDelivery () { return this._expectedDelivery; }
 

@@ -146,11 +146,11 @@ class Profile {
   }
 
   fetchJumioToken () {
-    return this.api.authPOST('account/verify/enhanced')
+    return this.api.authPOST('account/verify/enhanced');
   }
 
   fetchJumioStatus (id) {
-    return this.api.authGET(`account/verify/enhanced/${id}`)
+    return this.api.authGET(`account/verify/enhanced/${id}`);
   }
 }
 

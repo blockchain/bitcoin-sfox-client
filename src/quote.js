@@ -12,12 +12,15 @@ class Quote extends Exchange.Quote {
 
     var expiresAt = new Date(obj.expires_on);
     var timeOfRequest = new Date(obj.current_time);
+    var expectedDelivery = new Date(obj.expected_delivery);
     var btcAmount = toSatoshi(obj.base_amount);
     var usdAmount = obj.quote_amount;
 
     this._id = obj.quote_id;
     this._expiresAt = expiresAt;
     this._timeOfRequest = timeOfRequest;
+    this._expectedDelivery = expectedDelivery;
+    this._speedupAvailable = obj.speedup_available;
     this._rate = obj.rate;
 
     this._baseCurrency = baseCurrency.toUpperCase();
@@ -42,6 +45,14 @@ class Quote extends Exchange.Quote {
     return this._feeCurrency;
   }
 
+  get expectedDelivery () {
+    return this._expectedDelivery;
+  }
+
+  get speedupAvailable () {
+    return this._speedupAvailable;
+  }
+
   static getQuote (api, delegate, amount, baseCurrency, quoteCurrency, debug) {
     const processQuote = (quote) => {
       let q = new Quote(quote, baseCurrency, api, delegate);
@@ -51,14 +62,19 @@ class Quote extends Exchange.Quote {
 
     const getQuote = (_baseAmount) => {
       let action = _baseAmount > 0 ? 'buy' : 'sell';
-
-      return api.POST('quote/', {
+      let data = {
         action: action,
         base_currency: 'btc',
         quote_currency: 'usd',
         amount: Math.abs(_baseAmount),
         amount_currency: baseCurrency.toLowerCase()
-      }, 'v1', 'quotes');
+      };
+
+      if (api.hasAccount) {
+        return api.authPOST('quote/', data, 'v1', 'quotes');
+      } else {
+        return api.POST('quote/', data, 'v1', 'quotes');
+      }
     };
 
     return super
