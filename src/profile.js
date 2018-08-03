@@ -152,6 +152,12 @@ class Profile {
   fetchJumioStatus (id) {
     return this.api.authGET(`account/verify/enhanced/${id}`);
   }
+
+  submitPhoneCallOptIn (trade) {
+    return this.api.authPOST('account/verify/phone', {
+      transaction_id: trade.id
+    });
+  }
 }
 
 module.exports = Profile;
