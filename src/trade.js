@@ -9,7 +9,6 @@ class Trade extends Exchange.Trade {
 
     if (obj !== null) {
       this._id = obj.id.toLowerCase();
-      this._speedupAvailable = obj.speedup_available;
       this.set(obj);
     }
   }
@@ -70,6 +69,7 @@ class Trade extends Exchange.Trade {
     }
 
     this._receiveAddress = obj.address;
+    this._speedupAvailable = obj.speedup_available;
     this._txHash = obj.blockchain_tx_hash || (!this._is_buy ? this._txHash : null);
   }
 
