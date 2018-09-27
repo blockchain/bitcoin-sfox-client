@@ -46,7 +46,7 @@ describe('SFOX Bank Link', function () {
   beforeEach(function () {
     api = {
       authPOST (method, params) {
-        return Promise.resolve([b]);
+        return Promise.resolve(b);
       }
     };
 
