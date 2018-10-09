@@ -15,6 +15,8 @@ class Trade extends Exchange.Trade {
 
   get isBuy () { return this._is_buy; }
 
+  get speedupAvailable () { return this._speedupAvailable; }
+
   get expectedDelivery () { return this._expectedDelivery; }
 
   setFromAPI (obj) {
@@ -67,6 +69,7 @@ class Trade extends Exchange.Trade {
     }
 
     this._receiveAddress = obj.address;
+    this._speedupAvailable = obj.speedup_available;
     this._txHash = obj.blockchain_tx_hash || (!this._is_buy ? this._txHash : null);
   }
 
@@ -97,8 +100,9 @@ class Trade extends Exchange.Trade {
     return this;
   }
 
-  static fetchAll (api) {
-    return api.authGET('transaction');
+  static fetchAll (api, length) {
+    if (length) return api.authGET('transaction', { page_size: length });
+    else return api.authGET('transaction');
   }
 
   refresh () {

@@ -16,15 +16,20 @@ let obj;
 beforeEach(function () {
   api = {};
   b = {
-    'institution_type': 'fake_institution',
-    'meta': {
-      'name': 'Plaid Savings',
-      'number': '9606'
-    },
-    'balance': {
-      'current': 1274.93,
-      'available': 1203.42
-    }
+    accounts: [
+      {
+        'institution_type': 'fake_institution',
+        'subtype': 'checking',
+        'meta': {
+          'name': 'Plaid Savings',
+          'number': '9606'
+        },
+        'balance': {
+          'current': 1274.93,
+          'available': 1203.42
+        }
+      }
+    ]
   }
   obj = {
     firstName: 'Banky',
@@ -41,7 +46,7 @@ describe('SFOX Bank Link', function () {
   beforeEach(function () {
     api = {
       authPOST (method, params) {
-        return Promise.resolve([b]);
+        return Promise.resolve(b);
       }
     };
 

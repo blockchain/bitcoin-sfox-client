@@ -8,11 +8,11 @@ class BankLink {
   getAccounts (token) {
     assert(token, 'Public token required');
     const filterAccounts = (bankAccounts) => {
-      return bankAccounts.filter((a) => ['checking', 'savings'].indexOf(a.subtype) > -1);
+      return bankAccounts.accounts.filter((a) => ['checking', 'savings'].indexOf(a.subtype) > -1);
     };
 
     const getAccounts = (token) => {
-      return this._api.authPOST('account/bankEnumerate', {
+      return this._api.authPOST('payment-methods/plaid/list', {
         public_token: token
       });
     };
@@ -21,9 +21,10 @@ class BankLink {
   }
 
   setAccount (obj) {
-    return this._api.authPOST('account/bankToken', {
+    return this._api.authPOST('payment-methods/plaid/link', {
       public_token: obj.token,
-      name: obj.name,
+      firstname: obj.firstname,
+      lastname: obj.lastname,
       _id: obj.id
     });
   }
