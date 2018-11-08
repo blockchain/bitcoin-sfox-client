@@ -36,7 +36,7 @@
     "babel-cli": "^6.26.0",
     "browserify": "13.*",
     "browserify-istanbul": "2.0.*",
-    "coveralls": "^2.11.14",
+    "coveralls": "^3.0.2",
     "eslint": "2.*",
     "git-changelog": "^1.1.2",
     "jasmine-core": "^2.2.0",
@@ -45,11 +45,10 @@
     "karma-browserify": "^5.3.0",
     "karma-coverage": "^1.1.2",
     "karma-jasmine": "1.0.*",
-    "karma-osx-reporter": "0.2.*",
     "karma-phantomjs-launcher": "1.0.*",
     "phantomjs-prebuilt": "^2.1.16",
     "proxyquireify": "3.2.*",
-    "semistandard": "8.*",
+    "semistandard": "^13.0.0",
     "watchify": "^3.11.0"
   },
   "semistandard": {
